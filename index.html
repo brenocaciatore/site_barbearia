@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barbearia do Corte — Tradição e Estilo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --preto:    #111009;
+      --cafe:     #2B1D0E;
+      --ouro:     #C9973A;
+      --ouro-lt:  #E8C06A;
+      --creme:    #F5EFE4;
+      --cinza:    #8A8070;
+      --branco:   #FDFAF5;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--preto);
+      color: var(--creme);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 6vw;
+      background: rgba(17,16,9,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,151,58,0.15);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--ouro);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--creme);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.2s, color 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; color: var(--ouro); }
+
+    .nav-cta {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--preto);
+      background: var(--ouro);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--ouro-lt); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      width: 24px; height: 2px;
+      background: var(--creme);
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    #inicio {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6vw 4vw 6vw 8vw;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 6vw, 6rem);
+      line-height: 1.0;
+      font-weight: 900;
+      color: var(--branco);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--ouro);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--cinza);
+      max-width: 38ch;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--preto);
+      background: var(--ouro);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--ouro-lt); transform: translateY(-2px); }
+
+    .btn-ghost {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--creme);
+      background: transparent;
+      padding: 1rem 2rem;
+      border: 1px solid rgba(245,239,228,0.25);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--ouro); color: var(--ouro); }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(201,151,58,0.2);
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--ouro);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cinza);
+      margin-top: 0.3rem;
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, var(--preto) 0%, transparent 25%),
+        url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=80') center/cover no-repeat;
+    }
+
+    .hero-stripe {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 4px;
+      left: 0;
+      background: linear-gradient(to bottom, transparent, var(--ouro), transparent);
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 8vw; }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--branco);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── SOBRE ── */
+    #sobre {
+      background: var(--cafe);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+      align-items: center;
+    }
+
+    .sobre-img {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+    }
+
+    .sobre-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      transition: filter 0.4s;
+    }
+    .sobre-img:hover img { filter: grayscale(0%); }
+
+    .sobre-img-badge {
+      position: absolute;
+      bottom: 2rem; right: -1.5rem;
+      background: var(--ouro);
+      color: var(--preto);
+      padding: 1.2rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: -8px 8px 0 var(--preto);
+    }
+
+    .sobre-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--cinza);
+      margin-bottom: 1.2rem;
+    }
+
+    .sobre-text p strong { color: var(--creme); font-weight: 600; }
+
+    /* ── SERVIÇOS ── */
+    #servicos { background: var(--preto); }
+
+    .servicos-intro { max-width: 55ch; margin-bottom: 4rem; }
+
+    .servicos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .servico-card {
+      background: rgba(43,29,14,0.4);
+      border: 1px solid rgba(201,151,58,0.1);
+      padding: 2.5rem 2rem;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      cursor: default;
+    }
+
+    .servico-card:hover {
+      background: rgba(43,29,14,0.8);
+      border-color: rgba(201,151,58,0.4);
+      transform: translateY(-4px);
+    }
+
+    .servico-icon {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .servico-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--branco);
+      margin-bottom: 0.6rem;
+    }
+
+    .servico-desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--cinza);
+      margin-bottom: 1.5rem;
+    }
+
+    .servico-preco {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--ouro);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── DIFERENCIAIS ── */
+    #diferenciais {
+      background: var(--cafe);
+      text-align: center;
+    }
+
+    .diferenciais-intro { max-width: 50ch; margin: 0 auto 4rem; }
+
+    .diferenciais-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .diferencial-item {
+      padding: 2rem 1.5rem;
+      border-top: 2px solid rgba(201,151,58,0.3);
+      text-align: left;
+      transition: border-color 0.3s;
+    }
+    .diferencial-item:hover { border-color: var(--ouro); }
+
+    .diferencial-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--ouro);
+      margin-bottom: 1rem;
+    }
+
+    .diferencial-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--branco);
+      margin-bottom: 0.7rem;
+    }
+
+    .diferencial-desc {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--cinza);
+    }
+
+    /* ── BANNER CTA ── */
+    .banner-cta {
+      background: var(--ouro);
+      padding: 5rem 8vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .banner-cta-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--preto);
+      max-width: 22ch;
+      line-height: 1.2;
+    }
+
+    .btn-dark {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--branco);
+      background: var(--preto);
+      padding: 1.1rem 2.5rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-dark:hover { background: var(--cafe); }
+
+    /* ── CONTATO ── */
+    #contato {
+      background: var(--preto);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: start;
+    }
+
+    .contato-info p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--cinza);
+      margin-bottom: 2.5rem;
+    }
+
+    .contato-items { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .contato-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contato-item-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contato-item-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      margin-bottom: 0.2rem;
+    }
+
+    .contato-item-val {
+      font-size: 0.95rem;
+      color: var(--creme);
+      text-decoration: none;
+    }
+
+    .contato-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .form-group label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cinza);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(43,29,14,0.5);
+      border: 1px solid rgba(201,151,58,0.2);
+      color: var(--creme);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.9rem 1.1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--ouro);
+    }
+    .form-group select option { background: var(--cafe); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .btn-submit {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--preto);
+      background: var(--ouro);
+      border: none;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .btn-submit:hover { background: var(--ouro-lt); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--cafe);
+      padding: 3rem 8vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      border-top: 1px solid rgba(201,151,58,0.15);
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--ouro);
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--cinza);
+      text-align: center;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-socials a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cinza);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-socials a:hover { color: var(--ouro); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 5vw; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      #inicio {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-left { padding: 7rem 6vw 4rem; }
+      .hero-right { height: 55vw; }
+      .hero-img-bg { background: linear-gradient(to bottom, var(--preto) 0%, transparent 30%), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=80') center/cover no-repeat; }
+      .hero-stats { gap: 2rem; }
+
+      #sobre { grid-template-columns: 1fr; padding: 5rem 6vw; }
+      .sobre-img { aspect-ratio: 16/9; }
+      .sobre-img-badge { right: 1rem; }
+
+      .servicos-grid { grid-template-columns: 1fr; }
+      .diferenciais-grid { grid-template-columns: 1fr 1fr; }
+
+      #contato { grid-template-columns: 1fr; padding: 5rem 6vw; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .banner-cta { flex-direction: column; text-align: center; }
+
+      footer { flex-direction: column; align-items: center; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .diferenciais-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#inicio" class="nav-logo">Barbearia do Corte</a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#diferenciais">Diferenciais</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a href="#contato" class="nav-cta">Agendar</a>
+    <button class="hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="inicio">
+    <div class="hero-left">
+      <span class="hero-eyebrow">São Paulo, SP — Desde 2008</span>
+      <h1 class="hero-title">Onde o estilo<br>vira <em>tradição.</em></h1>
+      <p class="hero-sub">
+        Mais de 15 anos transformando a aparência e a confiança dos nossos clientes. 
+        Cortes precisos, ambiente autêntico, atendimento que respeita o seu tempo.
+      </p>
+      <div class="hero-actions">
+        <a href="#contato" class="btn-primary">Agendar horário</a>
+        <a href="#servicos" class="btn-ghost">Ver serviços</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">15+</div>
+          <div class="stat-label">Anos de tradição</div>
+        </div>
+        <div>
+          <div class="stat-num">4.200</div>
+          <div class="stat-label">Clientes ativos</div>
+        </div>
+        <div>
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Satisfação</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-bg"></div>
+      <div class="hero-stripe"></div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-img reveal">
+      <img
+        src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=700&q=80"
+        alt="Barbeiro trabalhando"
+        loading="lazy"
+      />
+      <div class="sobre-img-badge">
+        Mais de<br>15 anos<br>de história
+      </div>
+    </div>
+    <div class="sobre-text reveal">
+      <span class="section-eyebrow">Nossa história</span>
+      <h2 class="section-title">Nascemos no bairro,<br>crescemos com ele.</h2>
+      <p>
+        A <strong>Barbearia do Corte</strong> abriu as portas em 2008, no coração do bairro do Tatuapé, 
+        com um objetivo simples: oferecer um corte de qualidade com o calor humano que só um negócio 
+        de bairro sabe dar.
+      </p>
+      <p>
+        O fundador <strong>Rafael Mendes</strong> começou como aprendiz aos 17 anos e, depois de uma 
+        década aperfeiçoando a técnica, reuniu sua equipe e montou o próprio espaço. Hoje, são três 
+        cadeiras, seis profissionais e centenas de clientes fiéis que passam de pai para filho.
+      </p>
+      <p>
+        Aqui não tem frescura: só <strong>navalha afiada, produto bom e conversa boa</strong>.
+      </p>
+      <br />
+      <a href="#contato" class="btn-primary">Conheça o espaço</a>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos">
+    <div class="servicos-intro reveal">
+      <span class="section-eyebrow">O que fazemos</span>
+      <h2 class="section-title">Serviços feitos com precisão.</h2>
+    </div>
+    <div class="servicos-grid">
+      <div class="servico-card reveal">
+        <span class="servico-icon">✂️</span>
+        <div class="servico-name">Corte Social</div>
+        <p class="servico-desc">Acabamento impecável com máquina e tesoura. Ideal para o dia a dia e ocasiões formais.</p>
+        <span class="servico-preco">R$ 45</span>
+      </div>
+      <div class="servico-card reveal">
+        <span class="servico-icon">🪒</span>
+        <div class="servico-name">Barba na Navalha</div>
+        <p class="servico-desc">Ritual completo com toalha quente, óleo, navalha e finalização com produtos premium.</p>
+        <span class="servico-preco">R$ 35</span>
+      </div>
+      <div class="servico-card reveal">
+        <span class="servico-icon">💈</span>
+        <div class="servico-name">Combo Corte + Barba</div>
+        <p class="servico-desc">A dupla perfeita. Corte e barba em uma sessão só, com 20% de desconto no valor avulso.</p>
+        <span class="servico-preco">R$ 65</span>
+      </div>
+      <div class="servico-card reveal">
+        <span class="servico-icon">⚡</span>
+        <div class="servico-name">Degradê / Fade</div>
+        <p class="servico-desc">Transições precisas do zero ao comprimento desejado. Do skin fade ao high fade.</p>
+        <span class="servico-preco">R$ 55</span>
+      </div>
+      <div class="servico-card reveal">
+        <span class="servico-icon">🎨</span>
+        <div class="servico-name">Coloração</div>
+        <p class="servico-desc">Progressiva, luzes, cobertura de branco e descoloração com acompanhamento especializado.</p>
+        <span class="servico-preco">A partir de R$ 80</span>
+      </div>
+      <div class="servico-card reveal">
+        <span class="servico-icon">👦</span>
+        <div class="servico-name">Corte Infantil</div>
+        <p class="servico-desc">Ambiente tranquilo e profissionais pacientes para os pequenos. Até 10 anos.</p>
+        <span class="servico-preco">R$ 30</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section id="diferenciais">
+    <div class="diferenciais-intro reveal">
+      <span class="section-eyebrow">Por que nos escolher</span>
+      <h2 class="section-title">O que nos faz diferentes.</h2>
+    </div>
+    <div class="diferenciais-grid">
+      <div class="diferencial-item reveal">
+        <div class="diferencial-num">— 01</div>
+        <div class="diferencial-title">Equipe experiente</div>
+        <p class="diferencial-desc">Todos os profissionais têm mais de 5 anos de prática e passaram por treinamentos de barbeiros referência no Brasil.</p>
+      </div>
+      <div class="diferencial-item reveal">
+        <div class="diferencial-num">— 02</div>
+        <div class="diferencial-title">Produtos premium</div>
+        <p class="diferencial-desc">Utilizamos apenas marcas selecionadas de barbearia: Don Alcides, Barba Brava e Lola Cosmetics.</p>
+      </div>
+      <div class="diferencial-item reveal">
+        <div class="diferencial-num">— 03</div>
+        <div class="diferencial-title">Sem fila, sem espera</div>
+        <p class="diferencial-desc">Agendamento pelo WhatsApp ou pelo formulário deste site. Você chega na hora marcada e sai satisfeito.</p>
+      </div>
+      <div class="diferencial-item reveal">
+        <div class="diferencial-num">— 04</div>
+        <div class="diferencial-title">Ambiente acolhedor</div>
+        <p class="diferencial-desc">Café fresquinho, som ambiente, wi-fi e uma conversa boa. Aqui você se sente em casa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER CTA -->
+  <div class="banner-cta">
+    <p class="banner-cta-text">Pronto para o melhor corte que você já teve?</p>
+    <a href="#contato" class="btn-dark">Agendar agora</a>
+  </div>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="contato-info reveal">
+      <span class="section-eyebrow">Fale com a gente</span>
+      <h2 class="section-title">Venha nos visitar.</h2>
+      <p>Estamos de segunda a sábado, sempre prontos para te atender com hora marcada ou encaixe disponível.</p>
+      <div class="contato-items">
+        <div class="contato-item">
+          <span class="contato-item-icon">📍</span>
+          <div>
+            <div class="contato-item-label">Endereço</div>
+            <span class="contato-item-val">Rua Cônego Xavier, 321 — Tatuapé, São Paulo/SP</span>
+          </div>
+        </div>
+        <div class="contato-item">
+          <span class="contato-item-icon">📞</span>
+          <div>
+            <div class="contato-item-label">WhatsApp</div>
+            <a href="https://wa.me/5511912345678" class="contato-item-val">(11) 9 1234-5678</a>
+          </div>
+        </div>
+        <div class="contato-item">
+          <span class="contato-item-icon">🕐</span>
+          <div>
+            <div class="contato-item-label">Horário</div>
+            <span class="contato-item-val">Seg – Sex: 9h às 20h &nbsp;|&nbsp; Sáb: 9h às 18h</span>
+          </div>
+        </div>
+        <div class="contato-item">
+          <span class="contato-item-icon">📸</span>
+          <div>
+            <div class="contato-item-label">Instagram</div>
+            <a href="#" class="contato-item-val">@barbearia.docorte</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="contato-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" placeholder="Seu nome" required />
+        </div>
+        <div class="form-group">
+          <label for="telefone">Telefone / WhatsApp</label>
+          <input type="tel" id="telefone" placeholder="(11) 9 ..." required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="servico">Serviço desejado</label>
+        <select id="servico" required>
+          <option value="" disabled selected>Escolha um serviço</option>
+          <option>Corte Social</option>
+          <option>Barba na Navalha</option>
+          <option>Combo Corte + Barba</option>
+          <option>Degradê / Fade</option>
+          <option>Coloração</option>
+          <option>Corte Infantil</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="mensagem">Mensagem (opcional)</label>
+        <textarea id="mensagem" placeholder="Alguma preferência ou observação?"></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Enviar agendamento</button>
+      <p id="form-msg" style="color:var(--ouro); font-family:var(--font-mono); font-size:0.8rem; display:none;">
+        ✓ Mensagem enviada! Entraremos em contato em breve.
+      </p>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Barbearia do Corte</div>
+    <div class="footer-copy">© 2024 Barbearia do Corte. Todos os direitos reservados.</div>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+      <a href="#">Facebook</a>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      const cta = document.querySelector('nav .nav-cta');
+      if (!links) return;
+      const open = links.style.display === 'flex';
+      links.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(17,16,9,0.97);padding:1.5rem 6vw;gap:1.5rem;border-bottom:1px solid rgba(201,151,58,0.2)';
+      if (cta) cta.style.display = open ? '' : 'none';
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      const msg = document.getElementById('form-msg');
+      msg.style.display = 'block';
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
